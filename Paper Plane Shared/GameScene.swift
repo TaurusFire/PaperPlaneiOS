@@ -11,8 +11,40 @@ class GameScene: SKScene {
     
     
     fileprivate var label : SKLabelNode?
-    fileprivate var spinnyNode : SKShapeNode?
-
+    
+    let plane = SKSpriteNode(imageNamed: "PaperPlaneSprite.png")
+    
+    
+    var lastUpdateTime: TimeInterval = 0
+    var dt: TimeInterval = 0
+    
+    var obstacleOnLeft : Bool = false
+    var score : Int = 0
+    var isTouching : Bool = false
+    var touchLocation : CGPoint = CGPoint(x: 0, y: 0)
+    var lowestNodeYPosition : CGFloat = 0
+    
+    var angle : CGFloat = 90 {
+        didSet {
+            if angle < 10 {
+                angle = 10
+            } else if angle > 170 {
+               angle = 170
+            }
+        }
+    }
+    
+    var planeAmountToMovePerSec : CGFloat {
+        4*(angle - 90)
+    }
+    
+    var obstacleAmountToMovePerSec : CGFloat {
+        (-4*abs(90 - angle) + 90) * 2
+    }
+    
+    var nextObstacleLeft : Bool = true
+    
+    var generateObstacleCount = 0
     
     class func newGameScene() -> GameScene {
         // Load 'GameScene.sks' as an SKScene.
@@ -27,99 +59,138 @@ class GameScene: SKScene {
         return scene
     }
     
-    func setUpScene() {
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
-        
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 4.0
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
+    override init(size: CGSize){
+        super.init(size:size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func didMove(to view: SKView) {
-        self.setUpScene()
+        let background = SKShapeNode()
+        let path = CGMutablePath()
+        path.addRect(CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        background.position = CGPoint(x: 0, y: 0)
+        background.path = path
+        background.fillColor =  SKColor.green
+        addChild(background)
+        
+        plane.name = "plane"
+        plane.size = CGSize(width:200, height:60)
+        plane.position = CGPoint(x: self.size.width/2, y: self.size.height - 150)
+        
+        addChild(plane)
+        generateObstacle()
+    }
+    
+    
+    override func update(_ currentTime: TimeInterval) {
+        
+        if lastUpdateTime > 0 {
+            dt = currentTime - lastUpdateTime
+        } else {
+            dt = 0
+        }
+        
+        lastUpdateTime = currentTime
+        
+        if isTouching {
+            if touchLocation.x < self.size.width / 2 {
+                self.angle -= 1.5
+            } else {
+                self.angle += 1.5
+            }
+        }
+        
+        plane.zRotation = ((angle - 90) * CGFloat.pi) / 180
+        print(lowestNodeYPosition)
+        if lowestNodeYPosition > 300 {
+            generateObstacle()
+        }
+        
+        movePlane(dt)
+        moveObstacles(dt)
     }
 
-    func makeSpinny(at pos: CGPoint, color: SKColor) {
-        if let spinny = self.spinnyNode?.copy() as! SKShapeNode? {
-            spinny.position = pos
-            spinny.strokeColor = color
-            self.addChild(spinny)
+    
+    func generateObstacle(){
+        
+        var obstacle = SKSpriteNode(imageNamed: "SmallObstacle.png")
+        obstacle.name = "obstacle"
+        obstacle.size = CGSize(width: 1300, height: 30)
+        
+        if (score > 20 && score < 40) {
+            obstacle = SKSpriteNode(imageNamed: "MedObstacle.png")
+            }
+        else if (score > 50) {
+            obstacle = SKSpriteNode(imageNamed: "LargeObstacle.png")
+        }
+        
+        if obstacleOnLeft {
+            obstacle.position = CGPoint(x:obstacle.frame.width/2, y:0)
+        } else {
+            obstacle.position = CGPoint(x:self.size.width - (obstacle.frame.width/2), y:0)
+        }
+        
+        obstacleOnLeft = !obstacleOnLeft
+        
+        addChild(obstacle)
+        lowestNodeYPosition = 0
+    }
+    
+    func moveObstacles(_ duration: TimeInterval){
+        
+        let amountToMove = CGPoint(x:0, y:self.obstacleAmountToMovePerSec * duration)
+        let moveUpwards = SKAction.moveBy(x: amountToMove.x, y: amountToMove.y, duration: duration)
+        
+        enumerateChildNodes(withName: "obstacle") { node, stop in
+            node.run(moveUpwards)
+        }
+        
+        self.lowestNodeYPosition += amountToMove.y
+    }
+    
+    func movePlane(_ duration: TimeInterval){
+        let amountToMove = CGPoint(x:self.planeAmountToMovePerSec * duration, y:0)
+        let moveSideways = SKAction.moveBy(x: amountToMove.x, y: amountToMove.y, duration: duration)
+        
+        enumerateChildNodes(withName: "plane") { node, stop in
+            node.run(moveSideways)
         }
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
-}
-
-#if os(iOS) || os(tvOS)
-// Touch-based event handling
-extension GameScene {
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+        guard let touch = touches.first else {
+            return
         }
         
-        for t in touches {
-            self.makeSpinny(at: t.location(in: self), color: SKColor.green)
-        }
+        print("touch recognized")
+        isTouching = true
+        touchLocation = touch.location(in: self)
+        
+        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            self.makeSpinny(at: t.location(in: self), color: SKColor.blue)
+        guard let touch = touches.first else {
+            return
         }
+        print("touch recognized")
+        
+        isTouching = true
+        touchLocation = touch.location(in: self)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            self.makeSpinny(at: t.location(in: self), color: SKColor.red)
-        }
+
+        print("touch recognized")
+        
+        isTouching = false
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            self.makeSpinny(at: t.location(in: self), color: SKColor.red)
-        }
-    }
-    
-   
 }
-#endif
 
-#if os(OSX)
-// Mouse-based event handling
-extension GameScene {
 
-    override func mouseDown(with event: NSEvent) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
-        self.makeSpinny(at: event.location(in: self), color: SKColor.green)
-    }
-    
-    override func mouseDragged(with event: NSEvent) {
-        self.makeSpinny(at: event.location(in: self), color: SKColor.blue)
-    }
-    
-    override func mouseUp(with event: NSEvent) {
-        self.makeSpinny(at: event.location(in: self), color: SKColor.red)
-    }
-
-}
-#endif
 
