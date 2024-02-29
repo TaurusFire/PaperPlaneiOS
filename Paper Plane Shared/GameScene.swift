@@ -26,20 +26,41 @@ class GameScene: SKScene {
     
     var angle : CGFloat = 90 {
         didSet {
-            if angle < 10 {
-                angle = 10
-            } else if angle > 170 {
-               angle = 170
+            if angle < 30 {
+                angle = 30
+            } else if angle > 150 {
+               angle = 150
             }
         }
     }
     
+//    var planeAmountToMovePerSec : CGFloat {
+//        if angle <= 90 {
+//            CGFloat(-pow((angle - 90),2)) * pow(10,-1)
+//        } else {
+//            CGFloat(pow((angle - 90),2)) * pow(10,-1)
+//        }
+//    }
+    
     var planeAmountToMovePerSec : CGFloat {
-        4*(angle - 90)
+        if abs(angle-90) < 60 {
+            return 5.5*(angle-90)
+        } else {
+            return 6*(angle-90)
+        }
     }
     
     var obstacleAmountToMovePerSec : CGFloat {
-        (-4*abs(90 - angle) + 90) * 2
+        
+        if abs(angle-90) > 15 {
+            return (-abs(90 - angle) + 110) * 2.5
+        } else {
+            return (-abs(90 - angle) + 90) * 3
+        }
+        
+        
+        
+        
     }
     
     var nextObstacleLeft : Bool = true
@@ -97,19 +118,19 @@ class GameScene: SKScene {
         
         if isTouching {
             if touchLocation.x < self.size.width / 2 {
-                self.angle -= 1.5
+                self.angle -= 5
             } else {
-                self.angle += 1.5
+                self.angle += 5
             }
         }
         
         plane.zRotation = ((angle - 90) * CGFloat.pi) / 180
-        print(lowestNodeYPosition)
         if lowestNodeYPosition > 300 {
             generateObstacle()
         }
         
         movePlane(dt)
+        print(angle, planeAmountToMovePerSec, obstacleAmountToMovePerSec)
         moveObstacles(dt)
     }
 
@@ -166,7 +187,6 @@ class GameScene: SKScene {
             return
         }
         
-        print("touch recognized")
         isTouching = true
         touchLocation = touch.location(in: self)
         
@@ -177,7 +197,6 @@ class GameScene: SKScene {
         guard let touch = touches.first else {
             return
         }
-        print("touch recognized")
         
         isTouching = true
         touchLocation = touch.location(in: self)
@@ -185,7 +204,6 @@ class GameScene: SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-        print("touch recognized")
         
         isTouching = false
     }
