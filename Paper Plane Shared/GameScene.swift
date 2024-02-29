@@ -22,7 +22,7 @@ class GameScene: SKScene {
     var score : Int = 0
     var isTouching : Bool = false
     var touchLocation : CGPoint = CGPoint(x: 0, y: 0)
-    var lowestNodeYPosition : CGFloat = 0
+    // var lowestNodeYPosition : CGFloat = 0
     
     var angle : CGFloat = 90 {
         didSet {
@@ -64,9 +64,7 @@ class GameScene: SKScene {
     }
     
     var nextObstacleLeft : Bool = true
-    
-    var generateObstacleCount = 0
-    
+        
     class func newGameScene() -> GameScene {
         // Load 'GameScene.sks' as an SKScene.
         guard let scene = SKScene(fileNamed: "GameScene") as? GameScene else {
@@ -125,9 +123,9 @@ class GameScene: SKScene {
         }
         
         plane.zRotation = ((angle - 90) * CGFloat.pi) / 180
-        if lowestNodeYPosition > 300 {
-            generateObstacle()
-        }
+//        if lowestNodeYPosition > 300 {
+//            generateObstacle()
+//        }
         
         movePlane(dt)
         print(angle, planeAmountToMovePerSec, obstacleAmountToMovePerSec)
@@ -157,19 +155,30 @@ class GameScene: SKScene {
         obstacleOnLeft = !obstacleOnLeft
         
         addChild(obstacle)
-        lowestNodeYPosition = 0
+        //lowestNodeYPosition = 0
     }
     
     func moveObstacles(_ duration: TimeInterval){
         
         let amountToMove = CGPoint(x:0, y:self.obstacleAmountToMovePerSec * duration)
         let moveUpwards = SKAction.moveBy(x: amountToMove.x, y: amountToMove.y, duration: duration)
-        
+        var lowestNodeYPosition : CGFloat = self.frame.height //initialize at top of screen
         enumerateChildNodes(withName: "obstacle") { node, stop in
+        
+            if lowestNodeYPosition > node.position.y {
+                lowestNodeYPosition = node.position.y
+            }
             node.run(moveUpwards)
+            
+            if node.position.y > self.frame.height {
+                node.removeFromParent()
+            }
+        }
+        if lowestNodeYPosition > 300{
+            generateObstacle()
         }
         
-        self.lowestNodeYPosition += amountToMove.y
+//        lowestNodeYPosition += amountToMove.y
     }
     
     func movePlane(_ duration: TimeInterval){
