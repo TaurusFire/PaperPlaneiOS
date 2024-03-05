@@ -14,9 +14,13 @@
 		D65AF90D2B8A8F37007C74DC /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D65AF8F82B8A8F28007C74DC /* Actions.sks */; };
 		D65AF90F2B8A8F37007C74DC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65AF8FA2B8A8F28007C74DC /* GameScene.swift */; };
 		D65AF9102B8A8F37007C74DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D65AF8FB2B8A8F37007C74DC /* Assets.xcassets */; };
+		D6AB9F272B926BC800900F5A /* ObstacleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AB9F262B926BC800900F5A /* ObstacleNode.swift */; };
+		D6DEDCB72B97CC9300D9A19E /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DEDCB62B97CC9300D9A19E /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D6269B122B94D919001A36E3 /* Paper-Plane-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Paper-Plane-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D6269B132B951E0B001A36E3 /* GLIMSTIC.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = GLIMSTIC.TTF; sourceTree = "<group>"; };
 		D65AF8F82B8A8F28007C74DC /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		D65AF8FA2B8A8F28007C74DC /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		D65AF8FB2B8A8F37007C74DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -25,6 +29,8 @@
 		D65AF9052B8A8F37007C74DC /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		D65AF9082B8A8F37007C74DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D65AF90B2B8A8F37007C74DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D6AB9F262B926BC800900F5A /* ObstacleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleNode.swift; sourceTree = "<group>"; };
+		D6DEDCB62B97CC9300D9A19E /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +58,9 @@
 			children = (
 				D65AF8F82B8A8F28007C74DC /* Actions.sks */,
 				D65AF8FA2B8A8F28007C74DC /* GameScene.swift */,
+				D6DEDCB62B97CC9300D9A19E /* GameOverScene.swift */,
+				D6269B132B951E0B001A36E3 /* GLIMSTIC.TTF */,
+				D6AB9F262B926BC800900F5A /* ObstacleNode.swift */,
 				D65AF8FB2B8A8F37007C74DC /* Assets.xcassets */,
 			);
 			path = "Paper Plane Shared";
@@ -68,6 +77,7 @@
 		D65AF9022B8A8F37007C74DC /* Paper Plane iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D6269B122B94D919001A36E3 /* Paper-Plane-iOS-Info.plist */,
 				D65AF9032B8A8F37007C74DC /* AppDelegate.swift */,
 				D65AF9052B8A8F37007C74DC /* GameViewController.swift */,
 				D65AF9072B8A8F37007C74DC /* Main.storyboard */,
@@ -148,6 +158,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6DEDCB72B97CC9300D9A19E /* GameOverScene.swift in Sources */,
+				D6AB9F272B926BC800900F5A /* ObstacleNode.swift in Sources */,
 				D65AF90F2B8A8F37007C74DC /* GameScene.swift in Sources */,
 				D65AF9062B8A8F37007C74DC /* GameViewController.swift in Sources */,
 				D65AF9042B8A8F37007C74DC /* AppDelegate.swift in Sources */,
@@ -299,6 +311,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H6J7YG4349;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Paper-Plane-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -329,6 +342,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H6J7YG4349;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Paper-Plane-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
