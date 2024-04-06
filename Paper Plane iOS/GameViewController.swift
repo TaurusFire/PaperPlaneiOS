@@ -9,12 +9,12 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let scene = GameScene(size: CGSize(width: 2556, height: 1179))
+        let scene = GameScene(size: CGSize(width: 1179, height: 2556))
 
         // Present the scene
         let skView = self.view as! SKView
@@ -23,8 +23,15 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         skView.showsFPS = true
         skView.showsNodeCount = true
+        
+
+        
     }
 
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return [.left, .right]
+    }
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown

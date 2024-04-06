@@ -11,10 +11,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        if let recognizers = window?.gestureRecognizers {
+                for gesture in recognizers {
+                    gesture.delaysTouchesBegan = false
+                }
+        }
+        
         return true
     }
 

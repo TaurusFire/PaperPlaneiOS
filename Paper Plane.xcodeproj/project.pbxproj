@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D65068EB2BA2695F00E8D40F /* passObstacle.wav in Resources */ = {isa = PBXBuildFile; fileRef = D65068E92BA2695F00E8D40F /* passObstacle.wav */; };
+		D65068EC2BA2695F00E8D40F /* hitObstacle.wav in Resources */ = {isa = PBXBuildFile; fileRef = D65068EA2BA2695F00E8D40F /* hitObstacle.wav */; };
 		D65AF9042B8A8F37007C74DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65AF9032B8A8F37007C74DC /* AppDelegate.swift */; };
 		D65AF9062B8A8F37007C74DC /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65AF9052B8A8F37007C74DC /* GameViewController.swift */; };
 		D65AF9092B8A8F37007C74DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D65AF9072B8A8F37007C74DC /* Main.storyboard */; };
@@ -14,13 +16,15 @@
 		D65AF90D2B8A8F37007C74DC /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D65AF8F82B8A8F28007C74DC /* Actions.sks */; };
 		D65AF90F2B8A8F37007C74DC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65AF8FA2B8A8F28007C74DC /* GameScene.swift */; };
 		D65AF9102B8A8F37007C74DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D65AF8FB2B8A8F37007C74DC /* Assets.xcassets */; };
+		D6A8AF4B2BBC463A005DA830 /* warioware-inc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6A8AF4A2BBC463A005DA830 /* warioware-inc.ttf */; };
 		D6AB9F272B926BC800900F5A /* ObstacleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AB9F262B926BC800900F5A /* ObstacleNode.swift */; };
 		D6DEDCB72B97CC9300D9A19E /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DEDCB62B97CC9300D9A19E /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D6269B122B94D919001A36E3 /* Paper-Plane-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Paper-Plane-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
-		D6269B132B951E0B001A36E3 /* GLIMSTIC.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = GLIMSTIC.TTF; sourceTree = "<group>"; };
+		D65068E92BA2695F00E8D40F /* passObstacle.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = passObstacle.wav; sourceTree = "<group>"; };
+		D65068EA2BA2695F00E8D40F /* hitObstacle.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hitObstacle.wav; sourceTree = "<group>"; };
 		D65AF8F82B8A8F28007C74DC /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		D65AF8FA2B8A8F28007C74DC /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		D65AF8FB2B8A8F37007C74DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -29,6 +33,7 @@
 		D65AF9052B8A8F37007C74DC /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		D65AF9082B8A8F37007C74DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D65AF90B2B8A8F37007C74DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D6A8AF4A2BBC463A005DA830 /* warioware-inc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "warioware-inc.ttf"; sourceTree = "<group>"; };
 		D6AB9F262B926BC800900F5A /* ObstacleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleNode.swift; sourceTree = "<group>"; };
 		D6DEDCB62B97CC9300D9A19E /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -44,6 +49,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D65068E82BA2694600E8D40F /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				D65068EA2BA2695F00E8D40F /* hitObstacle.wav */,
+				D65068E92BA2695F00E8D40F /* passObstacle.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		D65AF8F22B8A8F25007C74DC = {
 			isa = PBXGroup;
 			children = (
@@ -58,8 +72,9 @@
 			children = (
 				D65AF8F82B8A8F28007C74DC /* Actions.sks */,
 				D65AF8FA2B8A8F28007C74DC /* GameScene.swift */,
+				D6A8AF4A2BBC463A005DA830 /* warioware-inc.ttf */,
 				D6DEDCB62B97CC9300D9A19E /* GameOverScene.swift */,
-				D6269B132B951E0B001A36E3 /* GLIMSTIC.TTF */,
+				D65068E82BA2694600E8D40F /* Sounds */,
 				D6AB9F262B926BC800900F5A /* ObstacleNode.swift */,
 				D65AF8FB2B8A8F37007C74DC /* Assets.xcassets */,
 			);
@@ -147,6 +162,9 @@
 				D65AF9092B8A8F37007C74DC /* Main.storyboard in Resources */,
 				D65AF90D2B8A8F37007C74DC /* Actions.sks in Resources */,
 				D65AF90C2B8A8F37007C74DC /* LaunchScreen.storyboard in Resources */,
+				D65068EC2BA2695F00E8D40F /* hitObstacle.wav in Resources */,
+				D6A8AF4B2BBC463A005DA830 /* warioware-inc.ttf in Resources */,
+				D65068EB2BA2695F00E8D40F /* passObstacle.wav in Resources */,
 				D65AF9102B8A8F37007C74DC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
